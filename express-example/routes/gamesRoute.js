@@ -1,12 +1,14 @@
 import { Router } from 'express';
-import { GamesService } from '../services/games-service.js';
+import GamesController from '../controllers/gamesController.js';
+import GamesService from '../services/gamesService.js';
 var router = Router();
 
-const gamesService = new GamesService();
+const gamesController = new GamesController(
+    new GamesService()
+)
 
-router.get("/games", function (req, res) {
-    const games = gamesService.getAllGames();
-    res.json(games);
+router.get("/games", async (req, res) => {
+    gamesController.getGames(req, res);
 })
 
 export default router;
